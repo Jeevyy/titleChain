@@ -38,8 +38,8 @@ Before you begin, ensure that you have the following on your system:
 - If not installed, follow the below sequence:
   -Step 1: Update package lists: ```sudo apt update```
   -Step 2: Install MySQL Server: ```sudo apt install mysql-server```
-  -Step 3: Step 3: Secure MySQL Installation: ```sudo mysql_secure_installation```
-  -Step 4: Step 4: Start MySQL Service: ```sudo systemctl start mysql```
+  -Step 3: Secure MySQL Installation: ```sudo mysql_secure_installation```
+  -Step 4: Start MySQL Service: ```sudo systemctl start mysql```
 
 ### Step 1: Clone the Repository
 

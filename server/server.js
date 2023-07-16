@@ -7,6 +7,11 @@ import cookieParser from 'cookie-parser';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { promises as fs } from 'fs'; // Import the fs module
+
 
 dotenv.config();
 
@@ -289,13 +294,15 @@ async function sendEmail(email, subject, message) {
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'C:/xampp/htdocs/csproject-develop/csproject-develop/frontEnd/src/uploads'); // Set the destination folder for uploaded files
+    cb(null, './uploads'); // Set the destination folder for uploaded files
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9); // Generate a unique filename
-    cb(null, uniqueSuffix + '-' + file.originalname); // Set the filename for the uploaded file
+    cb(null, file.originalname); // Set the filename for the uploaded file
   },
 });
+
+
 
 // Create the multer instance with the configured storage
 const upload = multer({ storage });
@@ -360,11 +367,16 @@ app.get('/getFileData', (req, res) => {
   });
 });
 
-app.get('/previewFile', (req, res) => {
-  const fileName = req.query.fileName;
-  const filePath = path.join(__dirname, 'frontEnd/src/uploads', fileName);
 
-  fs.readFile(filePath, (err, data) => {
+
+app.get('/previewFile/:filePath', (req, res) => {
+  const encodedFilePath = req.params.filePath;
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const filePath = decodeURIComponent(encodedFilePath);
+  const fullPath = path.join(__dirname, filePath); // Ensure only one 'uploads' folder is included in the path
+
+  fs.readFile(fullPath, (err, data) => {
     if (err) {
       console.error('Error reading file:', err);
       return res.status(500).json({ error: 'Failed to read file' });
@@ -374,6 +386,8 @@ app.get('/previewFile', (req, res) => {
     res.send(data);
   });
 });
+
+
 
 app.get('/getUnverifiedUploads', (req, res) => {
   const sql = 'SELECT id, issuer_name, issuer_email, file_path FROM unverifiedUploads';
@@ -468,6 +482,22 @@ app.get('/getVerifiedUploadsUser', (req, res) => {
       return res.json({ Status: 'Error', Error: 'Failed to fetch verified uploads' });
     }
     return res.json({ Status: 'Success', uploads: result });
+  });
+});
+
+
+app.post('/sendSignature', (req, res) => {
+  const { filePath, signature, address } = req.body;
+
+  const sql = 'UPDATE verifieduploads SET signature = ?, signature_address = ? WHERE file_path = ?';
+  db.query(sql, [signature, address, filePath], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.json({ status: 'Error', message: 'Failed to update signature' });
+    }
+
+    console.log(`Signature updated for file path: ${filePath}`);
+    return res.json({ status: 'Success', message: 'Signature updated' });
   });
 });
 

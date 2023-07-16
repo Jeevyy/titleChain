@@ -201,6 +201,11 @@ button {
     top: 10px;
 }
 
+.address-cell {
+  max-width: 400px; /* Adjust the max-width as per your requirements */
+  word-wrap: break-word;
+}
+
 #unverifiedUploads {
     position: relative;
     padding-top: 20px;
@@ -223,6 +228,239 @@ button {
     padding-left: 20px;
     border-left: 1px solid white;
 }
+
+.label{
+    padding-top: 10px;
+    color: white;
+    padding-right: 40px;
+    font-weight: bold;
+}
+
+.componentV .link-btn2
+{
+  display: flex;
+  justify-content: space-between;
+}
+.componentV .link-btn2
+{
+  margin: 10px 0;
+  font-size: 0.75em;
+  color: #8f8f8f;
+  text-decoration: beige;
+  position: absolute;
+  bottom: 10px;
+}
+
+.componentV .link-btn2:hover, 
+.componentV .link-btn2:nth-child(2)
+{
+  color: #45f3ff;
+  transform: translateY(-3px);
+  transition: 0.5s ease;
+}
+
+.successV{
+  position: relative;
+  margin-top: 20px;
+}
+
+.componentV {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  background: #23242a;
+}
+
+.componentV .auth-form-containerV {
+  position: relative;
+  width: 500px;
+  height: 750px;
+  background: #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.componentV .auth-form-containerV::before {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  transform-origin: bottom right;
+  background: linear-gradient(0deg, transparent, black, #45f3ff);
+  animation: animate 6s linear infinite;
+}
+
+.componentV .auth-form-containerV::after {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  transform-origin: bottom right;
+  background: linear-gradient(0deg, transparent, #45f3ff, white);
+  animation: animate 6s linear infinite;
+  animation-delay: -3s;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.componentV form {
+  position: absolute;
+  inset: 2px;
+  background: #28292d;
+  padding: 50px 40px;
+  border-radius: 8px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.componentV .auth-form-containerV h2 {
+  color: #45f3ff;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.componentV .inputBoxV {
+  position: relative;
+  width: 300px;
+  margin-top: 35px;
+  color: white;
+  border-bottom: 2px solid #45f3ff;
+}
+
+.componentV .inputBoxV input {
+  position: relative;
+  width: 100%;
+  padding: 10px 10px 10px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  color: white;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+  z-index: 10;
+}
+
+.inputboxV p{
+    color: white;
+}
+
+.componentV .inputBoxV span {
+  position: absolute;
+  left: 0;
+  padding: 20px 0px 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: #8f8f8f;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+}
+
+.componentV .inputBoxV input:valid ~ span,
+.componentV .inputBoxV input:focus ~ span {
+  color: #45f3ff;
+  transform: translateX(0px) translateY(-34px);
+  font-size: 0.75em;
+}
+
+.componentV .btnV {
+  border: none;
+  outline: none;
+  padding: 11px 25px;
+  background: #45f3ff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+  width: 415px;
+  margin-top: 10px;
+}
+
+.componentV .btnV[type="submit"] {
+  border: none;
+  outline: none;
+  padding: 11px 25px;
+  background: #45f3ff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+  width: 415px;
+  margin-top: 10px;
+}
+
+.componentV .btnV:hover {
+  background: black;
+  color: #45f3ff;
+  transform: translateY(3px);
+  transition: 0.5s;
+}
+
+.textarea1{
+  width: 100%;
+  height: 65px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-left: 4px solid #45f3ff;
+  border-right: 4px solid #28292d;
+  border-top: 4px solid #28292d;
+  border-bottom: 4px solid #28292d;
+  border-radius: 5px;
+  background-color: #28292d;
+  font-size: 16px;
+  resize: none;
+  color: white;
+}
+
+.textarea2{
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-left: 4px solid #45f3ff;
+  border-right: 4px solid #28292d;
+  border-top: 4px solid #28292d;
+  border-bottom: 4px solid #28292d;
+  border-radius: 5px;
+  background-color: #28292d;
+  font-size: 16px;
+  resize: none;
+  color: white;
+}
+
+.textarea3{
+  width: 100%;
+  height: 80px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-left: 4px solid #45f3ff;
+  border-right: 4px solid #28292d;
+  border-top: 4px solid #28292d;
+  border-bottom: 4px solid #28292d;
+  border-radius: 5px;
+  background-color: #28292d;
+  color: white;
+  font-size: 16px;
+  resize: none;
+}
+
+
 
 /********** RWD **********/
 @media (max-width: 575px) {

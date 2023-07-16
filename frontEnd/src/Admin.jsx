@@ -420,7 +420,9 @@ const Admin = () => {
                     <tr key={upload.id}>
                       <td>{upload.issuer_email}</td>
                       <td>{upload.verifier_email}</td>
-                      <td>{upload.file_path}</td>
+                      <td>
+                    <div className="address-cell">{upload.file_path}</div>
+                  </td>
                       <td>
                         {editUser && editUser.id === upload.id ? (
                           <input

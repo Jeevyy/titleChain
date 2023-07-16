@@ -9,24 +9,11 @@ import axios from 'axios';
 
 import './css/aos.css';
 
-/*
-import React, { useEffect, useState } from 'react';
-import AOS from 'aos';
-import './css/custom.css';
-import './css/bootstrap.min.css';
-import './font-awesome-4.7.0/css/font-awesome.min.css';
-
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-
-import './css/aos.css';
-*/
-
 const Issuer = () => {
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
-  const [email, setEmail] = useState(''); // Add email state
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(null);
@@ -70,35 +57,35 @@ const Issuer = () => {
     setUploadStatus(null);
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('issuerName', name);
-      formData.append('issuerEmail', email); // Pass the email state
-  
-      axios.post('http://localhost:8081/upload', formData)
-        .then(res => {
-          const filePath = res.data.filePath;
-          if (filePath) {
-            setUploadStatus('success');
-            setSelectedFile(null);
-            setTimeout(() => {
-              setUploadStatus(null);
-              window.location.reload();
-            }, 4000);
-          } else {
-            setUploadStatus('error');
-          }
-        })
-        .catch(err => {
+      formData.append('issuerEmail', email);
+
+      try {
+        const response = await axios.post('http://localhost:8081/upload', formData);
+        const filePath = response.data.filePath;
+
+        if (filePath) {
+          setUploadStatus('success');
+          setSelectedFile(null);
+          setTimeout(() => {
+            setUploadStatus(null);
+            window.location.reload();
+          }, 4000);
+        } else {
           setUploadStatus('error');
-          console.log(err);
-        });
+        }
+      } catch (error) {
+        setUploadStatus('error');
+        console.error(error);
+      }
     } else {
       setUploadStatus('error');
     }
-  };  
+  };
 
   if (loading) {
     return <div>Loading...</div>;

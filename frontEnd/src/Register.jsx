@@ -72,7 +72,7 @@ function Register() {
   };
 
   return (
-    <div className="component">
+  <div className="component">
     <div className="auth-form-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2>Register</h2>

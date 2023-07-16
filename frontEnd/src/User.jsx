@@ -4,7 +4,7 @@ import './css/custom.css';
 import './css/bootstrap.min.css';
 import './font-awesome-4.7.0/css/font-awesome.min.css';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 import axios from 'axios';
 
 import './css/aos.css';
@@ -16,6 +16,7 @@ const User = () => {
   const [loading, setLoading] = useState(true);
   const [verifiedUploads, setVerifiedUploads] = useState([]);
   const [email, setEmail] = useState('');
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   axios.defaults.withCredentials = true;
 
@@ -81,6 +82,11 @@ const User = () => {
     return <div>Loading...</div>;
   }
 
+  const handleCheckValidity = (filePath, signature, signatureAddress) => {
+    navigate('/verifymessage', { state: { filePath, signer: signature, signerAddress: signatureAddress } });
+    window.location.reload();
+  };
+
   return (
     <div>
       {auth ? (
@@ -113,25 +119,43 @@ const User = () => {
             </h2>
           </div>
 
+
+        <div className="table-responsive">
           <table className="table table-dark table-striped">
             <thead className="thead-dark">
               <tr>
                 <th>File Path</th>
                 <th>Signature</th>
                 <th>Signature Address</th>
+                <th>Check Validity</th>
               </tr>
             </thead>
             <tbody>
-              {verifiedUploads
-                .map((upload) => (
-                  <tr key={upload.id}>
-                    <td>{upload.file_path}</td>
-                    <td>{upload.signature}</td>
-                    <td>{upload.signature_address}</td>
-                  </tr>
-                ))}
+              {verifiedUploads.map((upload) => (
+                <tr key={upload.id}>
+                  <td>
+                    <div className="address-cell">{upload.file_path}</div>
+                  </td>
+                  <td>
+                    <div className="address-cell">{upload.signature}</div>
+                  </td>
+                  <td>
+                    <div className="address-cell">{upload.signature_address}</div>
+                  </td>
+                  <td>
+                   <button
+                      className="btn btn-primary submit-button focus:ring focus:outline-none"
+                      onClick={() => handleCheckValidity(upload.file_path, upload.signature, upload.signature_address)}
+                    >
+                      Check Validity
+                    </button>
+
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+        </div>
 
           <div className="jumbotron jumbotron-fluid" id="contact" style={{ backgroundImage: `url("https://images.squarespace-cdn.com/content/v1/62e74388ac41fd3cd162d1d2/1661329062631-EKRMKOOK91UPZSSYGWGZ/Background.png?format=2500w")` }}>
             <div className="container my-5">

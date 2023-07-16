@@ -14,6 +14,10 @@ import User from './User';
 import Admin from './Admin';
 import Issuer from './Issuer';
 import Verifier from './Verifier';
+import SuccessMessage from './SuccessMessage'
+import ErrorMessage from './ErrorMessage'
+import SignMessage from './SignMessage'
+import VerifyMessage from './VerifyMessage'
 
 function App() {
 
@@ -33,6 +37,10 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/issuer" element={<Issuer />} />
         <Route path="/verifier" element={<Verifier />} />
+        <Route path="/successmessage" element={<SuccessMessage />} />
+        <Route path="/errormessage" element={<ErrorMessage />} />
+        <Route path="/signmessage" element={<SignMessage />} />
+        <Route path="/verifymessage" element={<VerifyMessage />} />
       </Routes>
     </BrowserRouter>
   </div>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import SignMessage from "./SignMessage";
+import VerifyMessage from "./VerifyMessage";
 import AOS from 'aos';
 import './css/custom.css';
 import './css/bootstrap.min.css';
 import './font-awesome-4.7.0/css/font-awesome.min.css';
-
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import './css/aos.css';
@@ -14,7 +15,7 @@ const Verifier = () => {
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
+  const navigate = useNavigate();
   const [unverifiedUploads, setUnverifiedUploads] = useState([]);
   const [verifiedUploads, setVerifiedUploads] = useState([]);
   const [loadingFile, setLoadingFile] = useState(true);
@@ -99,7 +100,9 @@ const Verifier = () => {
     axios
       .post('http://localhost:8081/verifyUpload', data)
       .then((res) => {
+        
         console.log(res.data);
+        navigate('/signmessage', { state: { filePath } });
         window.location.reload();
       })
       .catch((err) => {
@@ -107,9 +110,11 @@ const Verifier = () => {
       });
   };
 
-  const renderFilePreview = (file) => {
-    window.open(`/previewFile/${encodeURIComponent(file)}`, '_blank');
-  };
+  const renderFilePreview = (filePath) => {
+  window.open(`http://localhost:8081/previewFile/${encodeURIComponent(filePath)}`, '_blank');
+};
+
+
 
   return (
     <div>
@@ -181,6 +186,7 @@ const Verifier = () => {
                         >
                           Verify
                         </button>
+                        
                       </td>
                     </tr>
                   ))}
